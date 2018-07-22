@@ -1,11 +1,8 @@
 <template>
     <v-app id="app" light>
-      <v-toolbar class="white">
-        <v-toolbar-title v-text="title"></v-toolbar-title>
-      </v-toolbar>
       <v-content>
         <section>
-          <v-parallax src="src/assets/hero.jpeg" height="600">
+          <v-parallax style="background: #17252A" height="600">
             <v-layout
               column
               align-center
@@ -36,9 +33,11 @@
           >
             <v-flex xs12 sm4 class="my-3">
               <div class="text-xs-center">
-                <h2 class="headline">The best way to start developing</h2>
+                <h1 class="headline">My Skills</h1>
                 <span class="subheading">
-                Cras facilisis mi vitae nunc
+                  <!--
+                As a web-developer, I always develop my skills<br>
+                  to make sure that my clients get the end result what they wanted.-->
               </span>
               </div>
             </v-flex>
@@ -51,9 +50,13 @@
                         <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
                       </v-card-text>
                       <v-card-title primary-title class="layout justify-center">
-                        <div class="headline text-xs-center">Material Design</div>
+                        <div class="headline text-xs-center">Graphic Work</div>
                       </v-card-title>
                       <v-card-text>
+
+
+
+
                         Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
                         Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                         Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
@@ -66,7 +69,7 @@
                         <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
                       </v-card-text>
                       <v-card-title primary-title class="layout justify-center">
-                        <div class="headline">Fast development</div>
+                        <div class="headline">Web Programming</div>
                       </v-card-title>
                       <v-card-text>
                         Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -81,7 +84,7 @@
                         <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
                       </v-card-text>
                       <v-card-title primary-title class="layout justify-center">
-                        <div class="headline text-xs-center">Completely Open Sourced</div>
+                        <div class="headline text-xs-center">Maintenance</div>
                       </v-card-title>
                       <v-card-text>
                         Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -97,7 +100,54 @@
         </section>
 
         <section>
-          <v-parallax src="src/assets/section.jpg" height="380">
+          <v-layout>
+            <v-flex xs12 class="my-3">
+              <div class="text-xs-center">
+                <h2 class="headline">My work</h2>
+                <span class="subheading">
+                Cras facilisis mi vitae nunc
+              </span>
+              </div>
+            </v-flex>
+          </v-layout>
+          <v-layout>
+            <v-flex xs12 sm12 md12 lg12 >
+                <v-container style="padding-left: 0; padding-right: 0;" v-bind="{ [`grid-list-${'sm'}`]: false }" fluid>
+                  <v-layout row wrap>
+                    <v-flex
+                      v-for="(image, key) in myWork"
+                      :key="key"
+                      xs12 sm6 md4 lg3
+                    >
+                      <v-card flat tile class="myWorkCard">
+                        <v-card-media
+                          :src="image.url"
+                          height="300px"
+                        >
+                          <!-- rgba(239, 131, 84, 0.5) -->
+                          <!-- rgba(79, 93, 117, 0.7) -->
+                          <v-container class="myWorkImage" :style="{
+                            backgroundColor: image.bgc
+                          }" fill-height fluid>
+                            <v-layout fill-height>
+                              <v-flex xs12 align-end flexbox class="white--text">
+                                <span class="headline">{{ image.title }}</span>
+                                <v-chip :color="image.type.color" class="category-chip white--text">{{ image.type.name }}</v-chip>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-card-media>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+
+            </v-flex>
+          </v-layout>
+        </section>
+
+        <section>
+          <v-parallax src="src/assets/section.jpg" height="400">
             <v-layout column align-center justify-center>
               <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
               <em>Kick-start your application today</em>
@@ -189,6 +239,171 @@ export default {
   name: 'app',
   data () {
     return {
+      myWork: [
+        {
+          url : 'src/images/avenue-web.jpg',
+          title: 'Avenue Esports Website',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Webdesign, Coding',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/ergoweb-ergotic-website.jpg',
+          title: 'Ergotic Webdesign',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Webdesign',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/ergotic-logo.jpg',
+          title: 'Ergotic Logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/arrows_by_snowy1337-d4xqycf.png',
+          title: '  djile 3D logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: '3D Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/wallpaper_by_snowy1337-d7ljvtw.png',
+          title: 'Explicit T-shirt',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Gaming-wear',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/arrows_by_snowy1337-d4xqycf.png',
+          title: '  djile 3D logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: '3D Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/blue_wallpaper_1920x1080_by_snowy1337-d6u0erm.png',
+          title: 'Playdown Logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: '3D Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/c2c35a27d51aa40ac7f9ed1461d7f505-d5cdue4.png',
+          title: 'NetCups Gaming Webiste',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Webdesign, Coding',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/call_of_duty_hu_logo_by_snowy1337-d4ohv00.png',
+          title: 'Call of Duty Hungary Logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/akuma-website.jpg',
+          title: 'Team-Akuma Website',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Webcoding',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/encore_logo_by_snowy1337-d4oiboj.png',
+          title: 'Encore Esports Logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/juventus_club_hungary_logo_by_snowy1337-d5qd97o.png',
+          title: 'Juventus Club Hungary Logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/mydesire_deviantart_by_snowy1337-d71e1vy.png',
+          title: 'MyDesire Esports Logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/mydesire_esports_deviantart_by_snowy1337-d71dyrh.png',
+          title: 'MyDesire Esports Website',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Webdesign, Coding',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/netcs_by_snowy1337-d6tkfw0.png',
+          title: 'NetCups T-shirt',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Gaming-wear',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/netcups_logo_with_new_texture_by_snowy1337-d7jxtaz.jpg',
+          title: 'NetCups 3D logo',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: '3D Logo',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/rhino_deviantart_by_snowy1337-d71dygv.png',
+          title: 'Rhino Esports Website',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Webdesign, Coding',
+            color: 'primary'
+          },
+        },
+        {
+          url : 'src/images/mistral-site.png',
+          title: 'Team Mistral Website',
+          bgc: 'rgba(79, 93, 117, 0.5)',
+          type: {
+            name: 'Webcoding',
+            color: 'primary'
+          },
+        }
+      ],
+      size: 'sm',
       title: 'Your Logo',
     }
   }
@@ -196,30 +411,37 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+  .category-chip {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+  }
+  .myWorkImage {
+    cursor: pointer;
+  }
+  .myWorkImage:hover {
+    -webkit-transition: all 500ms ease-in-out;
+    -ms-transition: ball 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
+    background: none !important;
+  }
+  .myWorkCard {
+    border: none;
+    outline: 0;
+    background: none;
+  }
+  .myWorkCard:hover {
+    -webkit-transition: all 200ms ease-in-out;
+    -ms-transition: ball 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+    transform: scale(1.04);
+    z-index: 100;
+    border: none;
+    outline: 0;
+    background: none;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 97px 15px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 97px 15px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 97px 15px rgba(0,0,0,0.5);
+  }
 </style>
