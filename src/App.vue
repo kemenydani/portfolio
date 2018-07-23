@@ -53,10 +53,6 @@
                         <div class="headline text-xs-center">Graphic Work</div>
                       </v-card-title>
                       <v-card-text>
-
-
-
-
                         Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
                         Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                         Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
@@ -114,21 +110,10 @@
             <v-flex xs12 sm12 md12 lg12 >
                 <v-container style="padding-left: 0; padding-right: 0;" v-bind="{ [`grid-list-${'sm'}`]: false }" fluid>
                   <v-layout row wrap>
-                    <v-flex
-                      v-for="(image, key) in myWork"
-                      :key="key"
-                      xs12 sm6 md4 lg3
-                    >
-                      <v-card flat tile class="myWorkCard">
-                        <v-card-media
-                          :src="image.url"
-                          height="300px"
-                        >
-                          <!-- rgba(239, 131, 84, 0.5) -->
-                          <!-- rgba(79, 93, 117, 0.7) -->
-                          <v-container class="myWorkImage" :style="{
-                            backgroundColor: image.bgc
-                          }" fill-height fluid>
+                    <v-flex v-for="(image, key) in galleryMyWork.items" :key="key" xs12 sm6 md4 lg3>
+                      <v-card flat tile class="myWorkCard" @click.native="openDialogAt(key)">
+                        <v-card-media :src="image.url" height="300px">
+                          <v-container class="myWorkImage" :style="{ backgroundColor: image.bgc }" fill-height fluid>
                             <v-layout fill-height>
                               <v-flex xs12 align-end flexbox class="white--text">
                                 <span class="headline">{{ image.title }}</span>
@@ -141,11 +126,49 @@
                     </v-flex>
                   </v-layout>
                 </v-container>
-
             </v-flex>
           </v-layout>
+          
+          <!-- modal -->
+  
+          <v-layout row justify-center >
+            <v-dialog v-model="galleryMyWork.dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+              <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
+              <v-card style="background: rgba(45,49,66, 0.95); color: #fff; position: relative;">
+                <v-toolbar dark style="background: rgba(45,49,66, 0.6)">
+                  <v-toolbar-title>My Work</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn icon dark @click.native="galleryMyWork.dialog = false">
+                    <v-icon>close</v-icon>
+                  </v-btn>
+                </v-toolbar>
+                <v-card-text>
+                  <div class="dialog-gallery">
+                    <div class="gallery-nav nav-left">
+                      <div class="nav-arrow arrow-left">
+                        <v-icon large color="white">navigate_before</v-icon>
+                      </div>
+                    </div>
+                    <div ref="viewport" class="viewport"
+                         v-if="galleryMyWork.currentItem"
+                         @click.native="zoom(key)"
+                         :style="{ backgroundImage: 'url('+galleryMyWork.currentItem.url+')', backgroundSize: (galleryMyWork.currentItem.zoom != true ? 'initial' : 'contain') }">
+                    </div>
+                    <div class="gallery-nav nav-right">
+                      <div class="nav-arrow arrow-right">
+                        <v-icon large color="white">navigate_next</v-icon>
+                      </div>
+                    </div>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </v-layout>
+          
+          <!-- modal end -->
+          
         </section>
-
+        
         <section>
           <v-parallax src="src/assets/section.jpg" height="400">
             <v-layout column align-center justify-center>
@@ -239,178 +262,250 @@ export default {
   name: 'app',
   data () {
     return {
-      myWork: [
-        {
-          url : 'src/images/avenue-web.jpg',
-          title: 'Avenue Esports Website',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Webdesign, Coding',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/ergoweb-ergotic-website.jpg',
-          title: 'Ergotic Webdesign',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Webdesign',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/ergotic-logo.jpg',
-          title: 'Ergotic Logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/arrows_by_snowy1337-d4xqycf.png',
-          title: '  djile 3D logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: '3D Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/wallpaper_by_snowy1337-d7ljvtw.png',
-          title: 'Explicit T-shirt',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Gaming-wear',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/arrows_by_snowy1337-d4xqycf.png',
-          title: '  djile 3D logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: '3D Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/blue_wallpaper_1920x1080_by_snowy1337-d6u0erm.png',
-          title: 'Playdown Logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: '3D Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/c2c35a27d51aa40ac7f9ed1461d7f505-d5cdue4.png',
-          title: 'NetCups Gaming Webiste',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Webdesign, Coding',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/call_of_duty_hu_logo_by_snowy1337-d4ohv00.png',
-          title: 'Call of Duty Hungary Logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/akuma-website.jpg',
-          title: 'Team-Akuma Website',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Webcoding',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/encore_logo_by_snowy1337-d4oiboj.png',
-          title: 'Encore Esports Logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/juventus_club_hungary_logo_by_snowy1337-d5qd97o.png',
-          title: 'Juventus Club Hungary Logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/mydesire_deviantart_by_snowy1337-d71e1vy.png',
-          title: 'MyDesire Esports Logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/mydesire_esports_deviantart_by_snowy1337-d71dyrh.png',
-          title: 'MyDesire Esports Website',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Webdesign, Coding',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/netcs_by_snowy1337-d6tkfw0.png',
-          title: 'NetCups T-shirt',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Gaming-wear',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/netcups_logo_with_new_texture_by_snowy1337-d7jxtaz.jpg',
-          title: 'NetCups 3D logo',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: '3D Logo',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/rhino_deviantart_by_snowy1337-d71dygv.png',
-          title: 'Rhino Esports Website',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Webdesign, Coding',
-            color: 'primary'
-          },
-        },
-        {
-          url : 'src/images/mistral-site.png',
-          title: 'Team Mistral Website',
-          bgc: 'rgba(79, 93, 117, 0.5)',
-          type: {
-            name: 'Webcoding',
-            color: 'primary'
-          },
+    	galleryMyWork : {
+    		dialog: false,
+        items: [
+	        {
+		        url : 'src/images/avenue-web.jpg',
+		        title: 'Avenue Esports Website',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Webdesign, Coding',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/ergoweb-ergotic-website.jpg',
+		        title: 'Ergotic Webdesign',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Webdesign',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/ergotic-logo.jpg',
+		        title: 'Ergotic Logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/arrows_by_snowy1337-d4xqycf.png',
+		        title: '  djile 3D logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: '3D Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/wallpaper_by_snowy1337-d7ljvtw.png',
+		        title: 'Explicit T-shirt',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Gaming-wear',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/arrows_by_snowy1337-d4xqycf.png',
+		        title: '  djile 3D logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: '3D Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/blue_wallpaper_1920x1080_by_snowy1337-d6u0erm.png',
+		        title: 'Playdown Logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: '3D Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/c2c35a27d51aa40ac7f9ed1461d7f505-d5cdue4.png',
+		        title: 'NetCups Gaming Webiste',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Webdesign, Coding',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/call_of_duty_hu_logo_by_snowy1337-d4ohv00.png',
+		        title: 'Call of Duty Hungary Logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/akuma-website.jpg',
+		        title: 'Team-Akuma Website',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Webcoding',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/encore_logo_by_snowy1337-d4oiboj.png',
+		        title: 'Encore Esports Logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/juventus_club_hungary_logo_by_snowy1337-d5qd97o.png',
+		        title: 'Juventus Club Hungary Logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/mydesire_deviantart_by_snowy1337-d71e1vy.png',
+		        title: 'MyDesire Esports Logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/mydesire_esports_deviantart_by_snowy1337-d71dyrh.png',
+		        title: 'MyDesire Esports Website',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Webdesign, Coding',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/netcs_by_snowy1337-d6tkfw0.png',
+		        title: 'NetCups T-shirt',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Gaming-wear',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/netcups_logo_with_new_texture_by_snowy1337-d7jxtaz.jpg',
+		        title: 'NetCups 3D logo',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: '3D Logo',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/rhino_deviantart_by_snowy1337-d71dygv.png',
+		        title: 'Rhino Esports Website',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Webdesign, Coding',
+			        color: 'primary'
+		        },
+	        },
+	        {
+		        url : 'src/images/mistral-site.png',
+		        title: 'Team Mistral Website',
+		        bgc: 'rgba(79, 93, 117, 0.5)',
+		        type: {
+			        name: 'Webcoding',
+			        color: 'primary'
+		        },
+	        }
+        ],
+        currentItem: {
+    			zoom: true,
         }
-      ],
+      },
       size: 'sm',
       title: 'Your Logo',
+    }
+  },
+  watchers : {
+  	'currentItem.zoom' : {
+  		handler: (v) => {
+  			if(v) {
+  				
+        }
+        else
+        {
+  				
+        }
+      },
+      deep: true
+    }
+  },
+  methods: {
+  	zoom( )
+    {
+  		this.galleryMyWork.currentItem.zoom = true;
+    },
+  	openDialogAt( key )
+    {
+  		this.galleryMyWork.currentItem = this.galleryMyWork.items[key];
+	    this.galleryMyWork.currentItem.zoom = false;
+  		this.galleryMyWork.dialog = true;
     }
   }
 }
 </script>
 
 <style lang="scss">
+  
+  .dialog-gallery {
+    height: calc(100vh - 110px);
+    min-height: calc(100vh - 110px);
+    display: flex;
+  
+    .viewport
+    {
+      flex: 1;
+      height: 100%;
+      min-height: 100%;
+      position: relative;
+      background-position: center center;
+      //background-size: contain;
+      cursor: zoom-in;
+    }
+    
+    .gallery-nav {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      .nav-arrow {
+        &.arrow-left { margin-right: 15px; }
+        &.arrow-right { margin-left: 15px; }
+        height: 40px;
+        width: 40px;
+        background: #4F5D75;
+        text-align: center;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+  }
+  
   .category-chip {
     position: absolute;
     bottom: 15px;
