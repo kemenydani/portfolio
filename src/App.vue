@@ -1,7 +1,7 @@
 <template>
     <v-app id="app" light>
       <v-content>
-        <section>
+        <section class="screen-section">
           <v-parallax style="background: #17252A" height="600">
             <v-layout
               column
@@ -95,7 +95,7 @@
           </v-layout>
         </section>
 
-        <section>
+        <section class="screen-section section-my-work" id="my-work">
           <v-layout>
             <v-flex xs12 class="my-3">
               <div class="text-xs-center">
@@ -106,70 +106,64 @@
               </div>
             </v-flex>
           </v-layout>
-          <v-layout>
-            <v-flex xs12 sm12 md12 lg12 >
-                <v-container style="padding-left: 0; padding-right: 0;" v-bind="{ [`grid-list-${'sm'}`]: false }" fluid>
-                  <v-layout row wrap>
-                    <v-flex v-for="(image, key) in galleryMyWork.items" :key="key" xs12 sm6 md4 lg3>
-                      <v-card flat tile class="myWorkCard" @click.native="openDialogAt(key)">
-                        <v-card-media :src="image.url" height="300px">
-                          <v-container class="myWorkImage" :style="{ backgroundColor: image.bgc }" fill-height fluid>
-                            <v-layout fill-height>
-                              <v-flex xs12 align-end flexbox class="white--text">
-                                <span class="headline">{{ image.title }}</span>
-                                <v-chip :color="image.type.color" class="category-chip white--text">{{ image.type.name }}</v-chip>
-                              </v-flex>
-                            </v-layout>
-                          </v-container>
-                        </v-card-media>
-                      </v-card>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-            </v-flex>
-          </v-layout>
-          
-          <!-- modal -->
-  
-          <v-layout row justify-center >
-            <v-dialog v-model="galleryMyWork.dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-              <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
-              <v-card style="background: rgba(45,49,66, 0.95); color: #fff; position: relative;">
-                <v-toolbar dark style="background: rgba(45,49,66, 0.6)">
-                  <v-toolbar-title>My Work</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-btn icon dark @click.native="galleryMyWork.dialog = false">
-                    <v-icon>close</v-icon>
-                  </v-btn>
-                </v-toolbar>
-                <v-card-text>
-                  <div class="dialog-gallery">
-                    <div class="gallery-nav nav-left">
-                      <div class="nav-arrow arrow-left">
-                        <v-icon large color="white">navigate_before</v-icon>
-                      </div>
-                    </div>
-                    <div ref="viewport" class="viewport"
-                         v-if="galleryMyWork.currentItem"
-                         @click.native="zoom(key)"
-                         :style="{ backgroundImage: 'url('+galleryMyWork.currentItem.url+')', backgroundSize: (galleryMyWork.currentItem.zoom != true ? 'initial' : 'contain') }">
-                    </div>
-                    <div class="gallery-nav nav-right">
-                      <div class="nav-arrow arrow-right">
-                        <v-icon large color="white">navigate_next</v-icon>
-                      </div>
-                    </div>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-dialog>
-          </v-layout>
-          
-          <!-- modal end -->
+          <v-parallax src="src/images/parallax-my-work.jpeg" :height="getVH()">
+            <v-layout justify-space-between align-start align-content-start wrap row>
+              <v-flex v-for="(image, key) in galleryMyWork.items" :key="key"  xs12 sm6 md4 lg3>
+                <v-card flat tile class="myWorkCard" @click.native="openDialogAt(key)" style="margin: 30px; background: none">
+                  <v-card-media :src="image.url" height="240px">
+                    <v-container class="myWorkImage" :style="{ backgroundColor: image.bgc }" fill-height fluid>
+                      <v-layout fill-height>
+                        <v-flex xs12 align-end flexbox class="white--text">
+                          <span class="headline">{{ image.title }}</span>
+                          <v-chip color="secondary" class="category-chip white--text">{{ image.type.name }}</v-chip>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-media>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-parallax>
           
         </section>
+  
+        <!-- modal -->
+  
+     
+          <v-dialog v-model="galleryMyWork.dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <v-card style="background: rgba(45,49,66, 0.95); color: #fff; position: relative;">
+              <v-toolbar dark style="background: rgba(45,49,66, 0.6)">
+                <v-toolbar-title>My Work</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon dark @click.native="galleryMyWork.dialog = false">
+                  <v-icon>close</v-icon>
+                </v-btn>
+              </v-toolbar>
+              <v-card-text>
+                <div class="dialog-gallery">
+                  <div class="gallery-nav nav-left">
+                    <div class="nav-arrow arrow-left">
+                      <v-icon large color="white">navigate_before</v-icon>
+                    </div>
+                  </div>
+                  <div ref="viewport" class="viewport"
+                       v-if="galleryMyWork.currentItem"
+                       @click.native="zoom(key)"
+                       :style="{ backgroundImage: 'url('+galleryMyWork.currentItem.url+')', backgroundSize: (galleryMyWork.currentItem.zoom != true ? 'initial' : 'contain') }">
+                  </div>
+                  <div class="gallery-nav nav-right">
+                    <div class="nav-arrow arrow-right">
+                      <v-icon large color="white">navigate_next</v-icon>
+                    </div>
+                  </div>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+   
+        <!-- modal end -->
         
-        <section>
+        <section style="display: none;">
           <v-parallax src="src/assets/section.jpg" height="400">
             <v-layout column align-center justify-center>
               <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
@@ -451,6 +445,9 @@ export default {
     }
   },
   methods: {
+  	getVH(){
+  		return window.innerHeight* 0.80;
+    },
   	zoom( )
     {
   		this.galleryMyWork.currentItem.zoom = true;
@@ -466,6 +463,41 @@ export default {
 </script>
 
 <style lang="scss">
+  
+  .screen-section {
+    min-height: 100%;
+    height: 100%;
+    min-height: 100vh !important;
+    height: 100vh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  #my-work {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    > :last-child, .v-parallax {
+      overflow: hidden;
+      align-self: flex-end;
+      justify-content: flex-start !important;
+      align-items: flex-start !important;
+      align-content: flex-start !important;
+      .flex {
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        align-content: flex-start !important;
+        .container {
+          justify-content: flex-start !important;
+          align-items: flex-start !important;
+          align-content: flex-start !important;
+        }
+      }
+    }
+    > * {
+      min-width: 100%;
+    }
+  }
   
   .dialog-gallery {
     height: calc(100vh - 110px);
