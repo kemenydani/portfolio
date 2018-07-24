@@ -24,7 +24,7 @@
           </v-parallax>
         </section>
 
-        <section>
+        <section class="screen-section section-my-skills" id="my-skills">
           <v-layout
             column
             wrap
@@ -106,7 +106,7 @@
               </div>
             </v-flex>
           </v-layout>
-          <v-parallax src="src/images/parallax-my-work.jpeg" :height="getVH()">
+          <v-parallax src="src/images/parallax-my-work.jpeg" :height="getVH( 0.7 )">
             <v-layout justify-space-between align-start align-content-start wrap row>
               <v-flex v-for="(image, key) in galleryMyWork.items" :key="key"  xs12 sm6 md4 lg3>
                 <v-card flat tile class="myWorkCard" @click.native="openDialogAt(key)" style="margin: 30px; background: none">
@@ -124,13 +124,11 @@
               </v-flex>
             </v-layout>
           </v-parallax>
-          
         </section>
   
         <!-- modal -->
-  
-     
-          <v-dialog v-model="galleryMyWork.dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+        
+        <v-dialog v-model="galleryMyWork.dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card style="background: rgba(45,49,66, 0.95); color: #fff; position: relative;">
               <v-toolbar dark style="background: rgba(45,49,66, 0.6)">
                 <v-toolbar-title>My Work</v-toolbar-title>
@@ -445,8 +443,8 @@ export default {
     }
   },
   methods: {
-  	getVH(){
-  		return window.innerHeight* 0.80;
+  	getVH( modifier = 1){
+  		return window.innerHeight * modifier;
     },
   	zoom( )
     {
