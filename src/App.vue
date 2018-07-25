@@ -1,8 +1,8 @@
 <template>
     <v-app id="app" light>
       <v-content>
-        <section class="screen-section">
-          <v-parallax style="background: #17252A" height="600">
+        <section class="screen-section" id="index">
+          <v-parallax style="background: #17252A" :height="getVH()">
             <v-layout
               column
               align-center
@@ -24,7 +24,7 @@
           </v-parallax>
         </section>
 
-        <section class="screen-section section-my-skills" id="my-skills">
+        <section class="screen-section section-my-skills" id="my-skills" style="display: none">
           <v-layout
             column
             wrap
@@ -106,7 +106,8 @@
               </div>
             </v-flex>
           </v-layout>
-          <v-parallax src="src/images/parallax-my-work.jpeg" :height="getVH( 0.7 )">
+          <div>
+          <v-parallax src="src/images/parallax-my-work.jpeg" :height="getVH( 0.7 )" :class="{ showAll : galleryMyWork.showAll }">
             <v-layout justify-space-between align-start align-content-start wrap row>
               <v-flex v-for="(image, key) in galleryMyWork.items" :key="key"  xs12 sm6 md4 lg3>
                 <v-card flat tile class="myWorkCard" @click.native="openDialogAt(key)" style="margin: 30px; background: none">
@@ -123,12 +124,12 @@
                 </v-card>
               </v-flex>
             </v-layout>
+            <div class="showMoreWorks">
+              <v-chip outline @click.native="galleryMyWork.showAll = !galleryMyWork.showAll" color="white">SHOW ALL</v-chip>
+            </div>
           </v-parallax>
-        </section>
-  
-        <!-- modal -->
-        
-        <v-dialog v-model="galleryMyWork.dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+          </div>
+          <v-dialog v-model="galleryMyWork.dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card style="background: rgba(45,49,66, 0.95); color: #fff; position: relative;">
               <v-toolbar dark style="background: rgba(45,49,66, 0.6)">
                 <v-toolbar-title>My Work</v-toolbar-title>
@@ -158,27 +159,15 @@
               </v-card-text>
             </v-card>
           </v-dialog>
+        </section>
+  
+        <!-- modal -->
+        
+        
    
         <!-- modal end -->
-        
-        <section style="display: none;">
-          <v-parallax src="src/assets/section.jpg" height="400">
-            <v-layout column align-center justify-center>
-              <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
-              <em>Kick-start your application today</em>
-              <v-btn
-                class="blue lighten-2 mt-5"
-                dark
-                large
-                href="/pre-made-themes"
-              >
-                Get Started
-              </v-btn>
-            </v-layout>
-          </v-parallax>
-        </section>
 
-        <section>
+        <section class="screen-section" id="contact">
           <v-container grid-list-xl>
             <v-layout row wrap justify-center class="my-5">
               <v-flex xs12 sm4>
@@ -256,6 +245,7 @@ export default {
     return {
     	galleryMyWork : {
     		dialog: false,
+        showAll : false,
         items: [
 	        {
 		        url : 'src/images/avenue-web.jpg',
@@ -462,11 +452,37 @@ export default {
 
 <style lang="scss">
   
+  .showAll {
+    min-height: auto !important;
+    height: auto !important;
+  }
+  
+  .showMoreWorks
+  {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+1,000000+100&0+0,0.26+25,0.51+25,0.92+57,1+100 */
+    background: -moz-linear-gradient(top, rgba(45,49,66,0) 0%, rgba(45,49,66,0.02) 1%, rgba(45,49,66,0.51) 25%, rgba(45,49,66,0.92) 57%, rgba(45,49,66,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(45,49,66,0) 0%,rgba(45,49,66,0.02) 1%,rgba(45,49,66,0.51) 25%,rgba(45,49,66,0.92) 57%,rgba(45,49,66,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(45,49,66,0) 0%,rgba(45,49,66,0.02) 1%,rgba(45,49,66,0.51) 25%,rgba(45,49,66,0.92) 57%,rgba(45,49,66,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 25%;
+    bottom: 0;left: 0; right: 0;
+    
+    > * {
+      margin-top: 20px;
+    }
+  }
+  
   .screen-section {
-    min-height: 100%;
-    height: 100%;
-    min-height: 100vh !important;
-    height: 100vh !important;
+    
+
+    
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -476,7 +492,7 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
     > :last-child, .v-parallax {
-      overflow: hidden;
+
       align-self: flex-end;
       justify-content: flex-start !important;
       align-items: flex-start !important;
